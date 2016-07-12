@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>2nd Ammendment Blog</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script>
+			angular.module('myApp', []);
+			angular.module('myApp').controller('InvCtrl', function($scope) {
+				$scope.list = [];
+				$scope.addItem = function () {
+					$scope.list.push($scope.newItem);
+					console.log("OMG! You add Stuffik to the list!");
+					$scope.newItem = {};
+				}
+				$scope.remove = function(index) {
+					$scope.list.splice(index, 1);
+					console.log("OMG! You took away my Stuffik!!!!!!!");
+				};
+			});
+		</script>
+	</head>
+	<body ng-app="myApp" ng-controller="InvCtrl">
+		<h2><center>OK Coders Blog - Powered by Node and Angular</center></h2>
+		<div class="container" style="padding-top:30px">
+			<div class="row">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h3 class="panel-title">Create Post</h3>
+							</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<label>Title:</label>
+									<input type="text" class="form-control" ng-model="newItem.title" placeholder="Post Title" required>
+								</div>
+								<div class="form-group">
+									<label>Body:</label>
+									<textarea class="form-control" ng-model="newItem.body" placeholder="Post Body" rows="10" cols="70" required></textarea>
+								</div>
+								<div class="text-center">
+									<input type="button" class="btn btn-primary" value="Save Post" ng-click="addItem()"
+									 ng-disabled="!newItem.title || !newItem.body">
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h3 class="panel-title">Blog Posts</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tr>
+										<th>Title</th>
+										<th class="text-right">Body</th>
+									</tr>
+									<tr ng-if="list.length===0">
+										<td colspan=3 class="text-center text-muted">No items to see until you add them!</td>
+									</tr>
+									<tr ng-repeat="item in list track by $index">
+										<td>{{item.title}}</td>
+										<td class="text-right">{{item.body}}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
