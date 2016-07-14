@@ -33,7 +33,6 @@
 				};
 			});
 
-
 			app.controller('ThreadCtrl', function($scope,$uibModal,$uibModalInstance,$http, threadItem) {
 				console.log('ThreadCtrl threadItem=', threadItem);
 				$scope.thread = threadItem;
@@ -74,35 +73,20 @@
 	<body ng-app="blogList">
 		<div class="container" ng-controller="BlogListCtrl">
 			<div class="page-header">
-				<h1>Blog Entries</h1>
+				<h2><a href ng-click="loadThread()">
+					<small><span class="glyphicon glyphicon-plus pull-right"></small></span></a>#BlogLivesMatter!
+				<img height="30" width="30" src="fist.svg"></h2>
 			</div>
-			<div class="panel panel-primary">
+			<div class="panel panel-primary" ng-repeat="thread in threads">
 				<div class="panel-heading">
-					<h3 class="panel-title">Add New Post</h3>
+					<h3 class="panel-title">
+						<a href ng-click="loadThread(thread)"><span class="glyphicon glyphicon-pencil pull-right"></span></a>
+						Post Title: {{thread.title}}
+					</h3>
 				</div>
 				<div class="panel-body">
-
-					<table class="table table-hover">
-						<tr>
-							<th>Title</th>
-							<th>Body</th>
-							<th>Date</th>
-							<th class="text-right">
-								<a href ng-click="loadThread()"><span class="glyphicon glyphicon-plus"></span></a>
-							</th>
-						</tr>
-						<tr ng-repeat="thread in threads">
-							<td>{{thread.title}}</td>
-							<td>{{thread.body}}</td>
-							<td>{{thread.date | date: 'longDate'}}</td>
-							<td class="text-right">
-								<a href ng-click="loadThread(thread)"><span class="glyphicon glyphicon-pencil"></span></a>
-							</td>
-						</tr>
-						<tr ng-if="!threads.length">
-							<td colspan=6 class="text-danger text-center">No Hits</td>
-						</tr>
-					</table>
+					<p style="white-space: pre-line">{{thread.body}}</p>
+					<div class="pull-right text-muted">{{thread.date | date: 'longDate'}}</div>
 				</div>
 			</div>
 		</div>
