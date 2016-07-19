@@ -1,0 +1,27 @@
+
+
+<div class="modal-header">
+    <h2 class="modal-title">Talk Back <img height="30" width="30" src="fist.svg"></h2>
+</div>
+
+<div class="modal-body">
+	<form name="commentForm">
+		<div class="form-group">
+			<label>Body</label>
+			<textarea rows=5 class="form-control" ng-model="comment.body"></textarea>
+		</div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" class="form-control" ng-model="comment.date" required>
+        </div>
+        <div class="form-group">
+            <label>Author</label>
+            <input class="form-control" ng-model="comment.author" required>
+        </div>
+	</form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-disabled="!commentForm.$valid">Save</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

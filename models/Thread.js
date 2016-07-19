@@ -1,9 +1,13 @@
 var mongoose = require('mongoose');
 
-var Post = mongoose.model('Post', {		// Create a new model called Hit
+module.exports = mongoose.model('Post', {                                    // Create a model called Post and export it
 	title: String,
 	body: String,
-	date: Date
+	date: Date,
+    author: {type:mongoose.Schema.Types.ObjectId, ref:'Author'},   // author is an ObjectId that references the Author model
+	comments: [{
+    author: String,
+    body: String,
+    date: Date
+	}]
 });
-
-module.exports = Post;					// Export Hit

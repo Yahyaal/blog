@@ -13,14 +13,40 @@ app.listen(8090, function() {
 	console.log('Listening at http://localhost:8090');
 });
 
+var Author = require('./models/Author');
+var Thread = require('./models/Thread');
 
+function initAuthors() {                            // This function first checks if data exists and adds it if it doesn't
+    return Author.count().then(function(count) {    // Count how many authors are in our database
+        if(count) return;                               // If even one exists, don't create anymore and bail out.
 
-var Thread = require('./models/Thread');						// Import our Hit model from models/hit.js
+        var authors = [                             // Define our list of authors that we want inserted
+            {name:'Pablo Escobar',  image:'/images/user1.png'},
+            {name:'Al Capone',      image:'/images/user1.png'},
+            {name:'John Dillinger', image:'/images/user1.png'},
+            {name:'Frank Costello', image:'/images/user1.png'}
+        ];
+
+        authors.forEach(function(author) {      // Loop through each element
+            author = new Author(author);    // Create a document from our model
+            return author.save();                   // Save the document
+        });
+    });
+}
+initAuthors();
+
 
 app.get('/threads', function(req,res) {					// Return all the hits in the Hit models (the hits collection)
-	Thread.find().sort({date:-1}).exec().then(function(threads) {		// Find a hits, sort by bounty descending, execute, and then...
+	// Thread.find().sort({date:-1}).exec().then(function(threads) {		// Find a hits, sort by bounty descending, execute, and then...
+	Thread.find().populate('author').sort({date:-1}).exec().then(function(threads) {
 		res.json(threads);			// Return the hits array
 	});
+});
+
+app.get('/authors', function(req,res) {
+   Author.find().exec().then(function(authors) {   // Find all contractors and then...
+	   res.json(authors);                              // Respond with the list of contractors
+   });
 });
 
 app.post('/threads', function(req,res) {			// Anything POSTed to /hits will either be created or updated (depending if _id is defined)
