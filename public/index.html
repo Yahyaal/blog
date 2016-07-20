@@ -47,6 +47,7 @@
 			});
 			app.controller('CommentCtrl', function($scope,$uibModal,$uibModalInstance,$http, threadItem) {     // Inject our dependencies and threadItem (the item we are editing)
 			    console.log('CommentCtrl threadItem=', threadItem);
+				$scope.comment={date: new Date()};
 			    $scope.save = function() {
 			        threadItem.comments.push($scope.comment);                                  // Push the current comment onto the comments array in threadItem
 			        $http.post('/threads', threadItem).then(function(response) {          		// Post threadItem to our /threads POST route and then...
@@ -118,24 +119,15 @@
 					</h3>
 				</div>
 				<div class="panel-body">
-					<p style="white-space: pre-line">{{thread.body}}</p>
-
 					<div class="pull-right text-muted">{{thread.date | date: 'longDate'}}</div>
-					<div class="panel-title">
-						 <button class="btn pull-left btn-warning btn-sm" ng-click="addComment(thread)">Add Comment</button>
-					</div>
-					<table class="table table-condensed">
-					    <tr>
-					        <th>Author</th>
-					        <th class="text-right">Comments</th>
-					        <th class="text-right">Date</th>
-					    </tr>
-					    <tr ng-repeat="comment in thread.comments">
-					        <td>{{comment.author}}</td>
-					        <td class="text-right">{{comment.body}}</td>
-					        <td class="text-right">{{comment.date | date: 'longDate'}}</td>
-					    </tr>
-					</table>
+					<p style="white-space: pre-line">{{thread.body}}</p>
+					<ul class="list-group">
+					  <li ng-repeat="comment in thread.comments" class="list-group-item">
+						  Comment By: <b>{{comment.author}}</b> on {{comment.date | date: 'longDate'}}<br>
+						  {{comment.body}}
+					  </li>
+					</ul>
+					<p><button class="btn pull-left btn-warning btn-sm" ng-click="addComment(thread)">Add Comment</button></p>
 				</div>
 			</div>
 		</div>
