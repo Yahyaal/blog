@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/blog');		// Connect to the hitList database
+mongoose.connect('mongodb://okcoders:okcoders@okcoders.co/brian');		// Connect to the hitList database
 mongoose.Promise = Promise;								// Tell mongoose to our ES6 promises
 
 var app = express();
